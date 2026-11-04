@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Open in Obsidian</title>
+<style>
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #fff; color: #1d1d1f;
+         font: 16px -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif; }
+  main { padding: 24px; text-align: center; }
+  a { color: #7c3aed; }
+</style>
+</head>
+<body>
+<main>
+  <p id="msg">Opening Obsidian…</p>
+  <p><a id="go" href="#">Open in Obsidian</a></p>
+</main>
+<script>
+  // Turns ?vault=...&file=... into an obsidian:// link. It only ever opens Obsidian, nothing else.
+  const q = new URLSearchParams(location.search);
+  const vault = q.get("vault"), file = q.get("file");
+  const go = document.getElementById("go");
+  if (vault) {
+    const uri = "obsidian://open?vault=" + encodeURIComponent(vault) + (file ? "&file=" + encodeURIComponent(file) : "");
+    go.href = uri;
+    location.replace(uri);
+  } else {
+    document.getElementById("msg").textContent = "This page opens a note in Obsidian, but the link has no vault name.";
+    go.remove();
+  }
+</script>
+</body>
+</html>
